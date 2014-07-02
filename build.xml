@@ -16,7 +16,24 @@
 
     <!-- deploy only -->
     <target name="deploy">
+      <antcall target="cleanSrcBeforeDeploy"/>
       <sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="src"/>
     </target>
+
+    <target name="cleanSrcBeforeDeploy">
+    	<outcomment file="src/settings/Account.settings" tagName="enableAccountTeams"/>
+    </target>
+
+    <!-- Macro: comment out specific tags -->
+    <macrodef name="outcomment">
+	  <attribute name="file">
+	  <attribute name="tagName">
+	  <sequential>
+	    <replaceregexp file="@{file}"
+	           match="(<@{tagname}>[^>]</@{tagname}>)"
+	           replace="<!--\1 -->"
+	     />
+	  </sequential>
+	</macrodef>
 
 </project>
