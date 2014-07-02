@@ -32,7 +32,7 @@
 	  <sequential>
 	    <replaceregexp file="@{file}"
 	           match="(&lt;@{tagname}&gt;[^]&lt;/@{tagname}&gt;)"
-	           replace="<!--\1 -->"
+	           replace="&lt;!--\1 --&gt;"
 	     />
 	  </sequential>
 	</macrodef>
