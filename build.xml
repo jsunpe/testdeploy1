@@ -30,12 +30,10 @@
 	  <attribute name="file"/>
 	  <attribute name="tagName"/>
 	  <sequential>
-	  	<echo>
 		    <replaceregexp file="@{file}"
 		           match="(&lt;@{tagname}&gt;[.*]&lt;/@{tagname}&gt;)"
 		           replace="&lt;!--\1 --&gt;"
 		     />
-	 	</echo>
 	  </sequential>
 	</macrodef>
 
