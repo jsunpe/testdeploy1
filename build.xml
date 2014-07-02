@@ -26,7 +26,7 @@
     <!-- git command -->
 	<macrodef name="git">
 		<attribute name="command" />
-		<attribute name="dir" default="" />
+		<attribute name="dir" default="." />
 		<element name="args" optional="true" />
 		<sequential>
 			<echo message="git @{command}" />
