@@ -31,7 +31,7 @@
 	  <attribute name="tagName"/>
 	  <sequential>
 	    <replaceregexp file="@{file}"
-	           match="(&lt;@{tagname}&gt;[*]&lt;/@{tagname}&gt;)"
+	           match="(&lt;@{tagname}&gt;[.*]&lt;/@{tagname}&gt;)"
 	           replace="&lt;!--\1 --&gt;"
 	     />
 	  </sequential>
