@@ -1,0 +1,4 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false">
+   <c:QuickCreateToolbar currentRecordId="{!$CurrentPage.parameters.id}"
+    showCase="true" showOpportunity="true" showContract="true"/>
+</apex:page>

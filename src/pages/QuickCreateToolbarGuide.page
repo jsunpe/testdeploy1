@@ -1,0 +1,271 @@
+<apex:page >
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script>
+$(document).ready(function () {
+    twistSection(document.getElementById('img_j_id0:j_id3:installation'));
+    twistSection(document.getElementById('img_j_id0:j_id3:gettingstarted'));
+    twistSection(document.getElementById('img_j_id0:j_id3:customization'));
+    twistSection(document.getElementById('img_j_id0:j_id3:about'));
+});
+</script>
+<style>
+table.userGuide td { vertical-align:top; font-size:14px;}
+p.normalText {font-size: 14px;}
+p.italic {font-size: 12px; font-style:italic;}
+h1.heading {font-weight:bold;font-size:15px;}
+</style>
+<apex:sectionHeader title="Quick Create Toolbar" subtitle="User Guide" />
+<apex:pageblock >
+    <apex:pageBlockSection title="Introduction" columns="1" id="introduction">
+        <p class="normalText">
+            The <b>Quick Create Toolbar</b> is a shortcut tool which allows users to quickly create a record from any other record, 
+            and in the process it automatically captures any relevant information from the source record and auto-populates the 
+            relevant fields in the new record.
+            <br/>
+            <br/>
+            For example, if a user needs to create an opportunity from a case record, in the standard Salesforce interface he/she must
+            go back to the account record to create the opportunity. With the Quick Create Toolbar, the user can quickly select a specific
+            opportunity record type, and the new record screen is shown with the Account information auto-filled, and on the saving of the 
+            new record the Contact information would be automatically linked to the opportunity.
+            <br/>
+            <br/>
+            The Quick Create Toolbar has the following features:
+                <ul style="font-size:14px;">
+                    <li><b>Works with most Standard Objects</b> - Account, Asset, Case, Contact, Contract and Opportunity</li>
+                    <li><b>Context-aware</b> - It is aware of the record on screen and can retrieve the record's details and auto-fill relevant fields in the new record</li>
+                    <li><b>Works with Service Cloud Console</b> - pops up new record pages as a secondary tab</li>
+                    <li><b>Works with Record Types</b> - shows all Record Types available to the specific user (i.e. it obeys record type security sharing)</li>
+                    <li><b>Visualforce Pages Enhancement</b> - Allows developers to add Visualforce Pages (such as special forms, wizards) to simplify user's data entry</li>
+                    <li><b>Record Type Override with Visualforce</b> - Allows developers to override specific record type's landing page with their own Visualforce Page</li>
+                </ul>
+        </p>
+    </apex:pageBlockSection>
+    
+    <apex:pageBlockSection title="Installation" columns="1" id="installation">
+        <table class="userGuide">
+            <tr>
+                <td width="20">1.</td>
+                <td>
+                    Install the Quick Create Toolbar package from AppExchange. 
+                </td>
+            </tr>
+            <tr>
+                <td width="20"></td>
+                <td>
+                    Note that there are two versions - feel free to download the Un-managed version and edit it for your own organisation, however we will not be able to provide support in such situation.
+                </td>
+            </tr>
+            
+            <tr>
+                <td>2.</td>
+                <td>Follow the Salesforce.com instructions on installing the package.</td>
+            </tr>
+            
+            <tr>
+                <td>3.</td>
+                <td>Once completed, the various QuickCreateToolbar should now be deployed into your organisation.</td>
+            </tr>
+        </table>
+    </apex:pageBlockSection>
+    
+    <apex:pageBlockSection title="Getting started" columns="1" id="gettingstarted">
+        <p class="normalText">
+            To begin using the Quick Create Toolbar, you will need to add the toolbar Visualforce pages
+            to each object page layout for which you want to use it on. Currently you can add the toolbar to the following standard page layout: 
+                <ul style="font-size:14px;">
+                    <li>Account</li>
+                    <li>Asset</li>
+                    <li>Case</li>
+                    <li>Contact</li>
+                    <li>Contract</li>
+                    <li>Opportunity</li>
+                    <li>Service Cloud Console (via the standard page layouts' Custom Console Components)</li>
+                </ul>
+        </p>
+        <p class="normalText">
+            <span style="font-size:14px;">Please follow the steps below to add the toolbar to a standard page layout:</span>
+        </p>
+        
+        <table class="userGuide">
+            <tr>
+                <td width="20">1.</td>
+                <td>Your Name -> Setup -> Customize -> Accounts -> Page Layouts (to add the toolbar to the Accounts page layout).</td>
+            </tr>
+            <tr>
+                <td>2.</td>
+                <td>Click 'Edit' on the page layout you wish to edit.</td>
+            </tr>
+            <tr>
+                <td>3.</td>
+                <td>Drag a new 'Section' to the top of the page layout.</td>
+            </tr>
+            <tr>
+                <td>4.</td>
+                <td>Name the column 'QuickCreateToolbar' and un-tick both 'Display Section Header' options. Set the layout to 1 column. Click OK.</td>
+            </tr>
+            <tr>
+                <td>5.</td>
+                <td>Select 'Visualforce pages' and drag the <i>QuickCreateToolbarAccountInlineVF</i> into the new section.</td>
+            </tr>
+            <tr>
+                <td>6.</td>
+                <td>Click the spanner icon to the top right of the inserted Visualforce page. Set the height in pixels to 30.</td>
+            </tr>
+            <tr>
+                <td>7.</td>
+                <td>Save the page layout.</td>
+            </tr>
+            <tr>
+                <td>8.</td>
+                <td>You are done! Repeat these steps for each object and page layout you would like the Quick Create Toolbar on.</td>
+            </tr>
+        
+        </table>
+        
+        <p class="normalText">
+            <span style="font-size:14px;">Please follow the steps below to add the toolbar to service cloud console:</span>
+        </p>
+        
+        <table class="userGuide">
+            <tr>
+                <td width="20">1.</td>
+                <td>Click 'Edit' on any standard page layout.</td>
+            </tr>
+            <tr>
+                <td>2.</td>
+                <td>On the top right corner, select 'Custom Console Components'.</td>
+            </tr>
+            <tr>
+                <td>3.</td>
+                <td>Drag a new 'Section' to the top of the page layout.</td>
+            </tr>
+            <tr>
+                <td>4.</td>
+                <td>On either the Top or Bottom Sidebar, select <i>QuickCreateToolbarSCCVF</i> for the Visualforce Page.</td>
+            </tr>
+            <tr>
+                <td>5.</td>
+                <td>Enter '30' for the Height.</td>
+            </tr>
+            <tr>
+                <td>6.</td>
+                <td>Click the save button, and then save the page layout.</td>
+            </tr>
+            <tr>
+                <td>7.</td>
+                <td>You are done! Repeat these steps for each object and page layout you would like the Quick Create Toolbar to show when you are in Service Cloud Console.</td>
+            </tr>
+        </table>
+    </apex:pageBlockSection>
+    
+    
+    <apex:pageBlockSection title="Customization" columns="1" id="customization">
+        <p class="normalText">
+            The Quick Create Toolbar comes with some easy configurable options to help adapt the toolbar to your organizations' needs.
+        </p>
+        <br/>
+        <h1 class="heading" style="margin-bottom:0;">Show/Hide quick create drop down lists</h1>
+        <p class="normalText" style="margin-top:5px;">
+            You can easily show or hide certain options from the toolbar:
+        </p>
+            <table class="userGuide">
+            <tr>
+                <td width="20">1.</td>
+                <td>Your Name -> Setup -> Develop -> Pages</td>
+            </tr>
+            <tr>
+                <td>2.</td>
+                <td>Create a new Visualforce Page and copy the Visualforce code from the Page you would like to edit the toolbar for.</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Eg. To edit the Account page layout toolbar, copy the <i>QuickCreateToolbarAccountInlineVF</i> page's Visualforce code into your new page</td>
+            </tr>
+            <tr>
+                <td>3.</td>
+                <td>In the new page, configure the <i>QuickCreateToolbar</i> Visualforce Component by setting the <i>show____</i> attributes to true or false depending on what you want to show.</td>
+            </tr>
+            </table>
+        <br/>
+        <h1 class="heading" style="margin-bottom:0;">Custom Visualforce pages for drop downs</h1>
+        <p class="normalText" style="margin-top:5px;">
+            You can easily add your own Visualforce page directs to the drop down lists, for easy access to your custom pages, or overriding a specific record type's page.
+        </p>
+        <table class="userGuide">
+            <tr>
+                <td width="20">1.</td>
+                <td>Your Name -> Setup -> Develop -> Custom Settings</td>
+            </tr>
+            <tr>
+                <td>2.</td>
+                <td>Click 'Manage' on the Custom Setting 'QuickCreateToolbarVFOverride'</td>
+            </tr>
+            <tr>
+                <td>3.</td>
+                <td>Click 'New' to add a new Visualforce page.</td>
+            </tr>
+            <tr>
+                <td>4.</td>
+                <td>Create a unique name for your override.</td>
+            </tr>
+            <tr>
+                <td>5.</td>
+                <td>The <i>Order</i> field determines how the Record Type / Visualforce page is ordered.</td>
+            </tr>
+            <tr>
+                <td>6.</td>
+                <td>The <i>SObjectType</i> must be the developer / API name of the list you want to add your Visualforce page to. Eg. "Case" or "Opportunity" etc.</td>
+            </tr>
+            <tr>
+                <td>7.</td>
+                <td>The <i>RecordTypeName</i> is an optional field. By leaving it empty, a new picklist item will appear on the specified SObjectType's dropdown, which directs users to the Visualforce page.</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Alternatively, you can enter the developer name of one of the specified SObjectType's record type (Note: must be exact match). This would 'override' the record type's picklist item.</td>
+            </tr>
+            <tr>
+                <td>8.</td>
+                <td>Set the <i>LabelOverride</i> to the text you would like displayed on your select list. This is optional if RecordTypeName is filled.</td>
+            </tr>
+            <tr>
+                <td>9.</td>
+                <td>Set the <i>VFPage name</i> to the API name of your Visualforce page.</td>
+            </tr>
+            <tr>
+                <td>10.</td>
+                <td>Click 'Save' and go back to your object records to test.</td>
+            </tr>
+        </table>
+        <p class="normalText" style="margin-top:5px;">
+            Note that when users clicks on the picklist item that is a Visualforce override, the relevant information of the record on screen is passed into the Visualforce page using page parameters. Developers can use the relevant Visualforce / Apex code to retrieve those information.
+        </p>
+            
+    </apex:pageBlockSection>
+    
+    
+    <apex:pageBlockSection title="About" columns="1" id="about">
+        <p class="normalText">
+            Designed and developed by 
+            <a href="http://au.linkedin.com/in/jsunpe" target="_blank">Jsun Pe</a> 
+            - 
+            <a href="http://www.davanti.co.nz" target="_blank">Davanti Consulting</a> 
+            &amp; <a href="http://www.linkedin.com/pub/dennis-thong/1/55a/393" target="_blank">Dennis Thong</a> 
+            - 
+            <a href="http://www.salesforce.com" target="_blank">salesforce.com</a>
+        </p>
+                    
+        <p class="italic">
+            Special Thanks to 
+            <a href="http://www.linkedin.com/profile/view?id=119715198" target="_blank">Ben Edwards</a> - 
+            <a href="http://www.davanti.co.nz" target="_blank">Davanti Consulting</a>
+             - for maintaining, packaging and documenting this work.
+        </p>
+        
+        <br/><br/>
+            
+        <img src="http://www.davanti.co.nz/images/davanti.gif" />
+    </apex:pageBlockSection>
+
+</apex:pageblock>
+</apex:page>

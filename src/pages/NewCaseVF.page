@@ -1,0 +1,10 @@
+<apex:page standardcontroller="Case" extensions="NewCaseVFExCon">
+    <apex:form >
+        <apex:pageblock >
+            <apex:pageblocksection >
+                <apex:inputField value="{!Case.AccountId}"/>
+                <apex:inputField value="{!Case.ContactId}"/>
+            </apex:pageblocksection>
+        </apex:pageblock>
+    </apex:form>
+</apex:page>

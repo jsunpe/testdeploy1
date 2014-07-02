@@ -1,0 +1,186 @@
+<apex:component controller="QuickCreateToolbarCon">
+    <apex:attribute name="currentRecordId" type="id" assignTo="{!currentRecordId}" description="Record ID of the page the bar is on"/>
+    <apex:attribute name="showCase" type="boolean" description="Show the Quick Create Case section - Defaults to false" default="false"/>
+    <apex:attribute name="showRelatedCaseCheckbox" type="boolean" description="Show the Related Case Checkbox in the Quick Create Case section - Defaults to false" default="false"/>
+    <apex:attribute name="showOpportunity" type="boolean" description="Show the Quick Create Opportunity section - Defaults to false" default="false"/>
+    <apex:attribute name="showAsset" type="boolean" description="Show the Quick Create Asset section - Defaults to false" default="false"/>
+    <apex:attribute name="showContract" type="boolean" description="Show the Quick Create Contract section - Defaults to false" default="false"/>
+    <apex:includeScript value="/support/console/23.0/integration.js"/>
+    <apex:stylesheet value="{!URLFOR($Resource.QuickCreateToolbarResources, '/QuickCreateToolbarCSS.css')}"/>
+
+    <apex:form >
+        <div class="moduleHeader">
+            <span class="btmlabel" style="margin-right:30px;">
+                <strong style="font-size: 1.2em;">Quick Create</strong>&nbsp;&nbsp;
+            </span>
+            <apex:outputPanel layout="none" rendered="{!showCase}">
+                <span class="btmlabel">
+                    Case:
+                </span>
+                <span class="btmfield">
+                	<apex:outputPanel layout="none" rendered="{!showRelatedCaseCheckbox}">
+	                    <span class="btmlabel">
+	                        Related?
+	                        <apex:inputCheckbox id="relatedCaseCheckbox"/>
+	                    </span>
+                    </apex:outputPanel>
+                    <script>
+                        var relatedCaseCheckboxField = document.getElementById('{!$Component.relatedCaseCheckbox}');
+                    </script>
+                    <apex:selectList multiselect="false" size="1" onchange="QuickCase('{!$Component.quickcase}');" id="quickcase">
+                        <apex:selectOptions value="{!caseRTypeInfoContainer.rTypeInfoSOs}"/>       
+                        <script type="text/javascript">
+                            var caseRecordTypeSelectField;
+                            var caseRecordTypeIdOrVFPageName;
+                            var caseURLPrefix;
+                            var isRelatedCase = false;
+                            function QuickCase(compId) {
+                                caseRecordTypeSelectField = document.getElementById(compId);
+                                caseRecordTypeIdOrVFPageName = caseRecordTypeSelectField.options[caseRecordTypeSelectField.selectedIndex].value;
+                                if(relatedCaseCheckboxField != null){
+                                    isRelatedCase = relatedCaseCheckboxField.checked;
+                                }
+                                if(caseRecordTypeIdOrVFPageName!=""){
+                                    caseURLPrefix = "{!stdCaseURLPrefix}";
+                                    if(caseRecordTypeIdOrVFPageName.indexOf("012", 0) == 0){
+                                        caseURLPrefix += "&RecordType="+caseRecordTypeIdOrVFPageName;
+                                    }else if(caseRecordTypeIdOrVFPageName != "{!NO_RECORD_TYPE_SO_VALUE}"){ //assume VF page
+                                        caseURLPrefix = "{!vfURLPrefix}" + caseRecordTypeIdOrVFPageName + "{!vfCaseURLSuffix}";
+                                    }
+                                    if(isRelatedCase){
+                                        caseURLPrefix += "{!parentCaseParamURLSuffix}";
+                                    }
+                                    if(sforce.console.isInConsole()){
+                                        sforce.console.getEnclosingPrimaryTabId(openCaseSCC );
+                                    }else{
+                                        window.top.location = caseURLPrefix;
+                                    }
+                                }
+                                caseRecordTypeSelectField.selectedIndex=0;
+                            }
+                            var openCaseSCC = function openCaseSCC (result) {
+                                sforce.console.openSubtab(result.id ,caseURLPrefix+'&isdtp=vw', true, '', null);
+                            }
+                        </script>
+                    </apex:selectList>
+                </span>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!showOpportunity}">
+                <span class="btmlabel">
+                    Opportunity:
+                </span>
+                <span class="btmfield">
+                    <apex:selectList multiselect="false" size="1" onchange="QuickOpportunity('{!$Component.quickopportunity}');" id="quickopportunity">
+                        <apex:selectOptions value="{!opportunityRTypeInfoContainer.rTypeInfoSOs}"/>       
+                        <script type="text/javascript">
+                            var opportunityRecordTypeSelectField;
+                            var opportunityRecordTypeIdOrVFPageName;
+                            var opportunityURLPrefix;
+                            function QuickOpportunity(compId) {
+                                opportunityRecordTypeSelectField = document.getElementById(compId);
+                                opportunityRecordTypeIdOrVFPageName = opportunityRecordTypeSelectField.options[opportunityRecordTypeSelectField.selectedIndex].value;
+                                if(opportunityRecordTypeIdOrVFPageName!=""){
+                                    opportunityURLPrefix = "{!stdOpportunityURLPrefix}";
+                                    if(opportunityRecordTypeIdOrVFPageName.indexOf("012", 0) == 0){
+                                        opportunityURLPrefix += "&RecordType="+opportunityRecordTypeIdOrVFPageName;
+                                    }else if(opportunityRecordTypeIdOrVFPageName != "{!NO_RECORD_TYPE_SO_VALUE}"){ //assume VF page
+                                        opportunityURLPrefix = "{!vfURLPrefix}" + opportunityRecordTypeIdOrVFPageName + "{!vfOpportunityURLSuffix}";
+                                    }
+                                    if(sforce.console.isInConsole()){
+                                        sforce.console.getEnclosingPrimaryTabId(openOpportunitySCC );
+                                    }else{
+                                        window.top.location = opportunityURLPrefix;
+                                    }
+                                }
+                                opportunityRecordTypeSelectField.selectedIndex=0;
+                            }
+                            var openOpportunitySCC = function openOpportunitySCC (result) {
+                                sforce.console.openSubtab(result.id ,opportunityURLPrefix+'&isdtp=vw', true, '', null);
+                            }
+                        </script>
+                    </apex:selectList>
+                </span>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!showAsset}">
+                <span class="btmlabel">
+                    Asset:
+                </span>
+                <span class="btmfield">
+                    <apex:selectList multiselect="false" size="1" onchange="QuickAsset('{!$Component.quickasset}');" id="quickasset">
+                        <apex:selectOptions value="{!assetRTypeInfoContainer.rTypeInfoSOs}"/>       
+                        <script type="text/javascript">
+                            var assetRecordTypeSelectField;
+                            var assetRecordTypeIdOrVFPageName;
+                            var assetURLPrefix;
+                            function QuickAsset(compId) {
+                                assetRecordTypeSelectField = document.getElementById(compId);
+                                assetRecordTypeIdOrVFPageName = assetRecordTypeSelectField.options[assetRecordTypeSelectField.selectedIndex].value;
+                                if(assetRecordTypeIdOrVFPageName!=""){
+                                    assetURLPrefix = "{!stdAssetURLPrefix}";
+                                    if(assetRecordTypeIdOrVFPageName.indexOf("012", 0) == 0){
+                                        assetURLPrefix += "&RecordType="+assetRecordTypeIdOrVFPageName;
+                                    }else if(assetRecordTypeIdOrVFPageName != "{!NO_RECORD_TYPE_SO_VALUE}"){ //assume VF page
+                                        assetURLPrefix = "{!vfURLPrefix}" + assetRecordTypeIdOrVFPageName + "{!vfAssetURLSuffix}";
+                                    }
+                                    if(sforce.console.isInConsole()){
+                                        sforce.console.getEnclosingPrimaryTabId(openAssetSCC );
+                                    }else{
+                                        window.top.location = assetURLPrefix;
+                                    }
+                                }
+                                assetRecordTypeSelectField.selectedIndex=0;
+                            }
+                            var openAssetSCC = function openAssetSCC (result) {
+                                sforce.console.openSubtab(result.id ,assetURLPrefix+'&isdtp=vw', true, '', null);
+                            }
+                        </script>
+                    </apex:selectList>
+                </span>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!showContract}">
+                <span class="btmlabel">
+                    Contract:
+                </span>
+                <span class="btmfield">
+                    <apex:selectList multiselect="false" size="1" onchange="QuickContract('{!$Component.quickcontract}');" id="quickcontract">
+                        <apex:selectOptions value="{!contractRTypeInfoContainer.rTypeInfoSOs}"/>       
+                        <script type="text/javascript">
+                            var contractRecordTypeSelectField;
+                            var contractRecordTypeIdOrVFPageName;
+                            var contractURLPrefix;
+                            function QuickContract(compId) {
+                                contractRecordTypeSelectField = document.getElementById(compId);
+                                contractRecordTypeIdOrVFPageName = contractRecordTypeSelectField.options[contractRecordTypeSelectField.selectedIndex].value;
+                                if(contractRecordTypeIdOrVFPageName!=""){
+                                    contractURLPrefix = "{!stdContractURLPrefix}";
+                                    if(contractRecordTypeIdOrVFPageName.indexOf("012", 0) == 0){
+                                        contractURLPrefix += "&RecordType="+contractRecordTypeIdOrVFPageName;
+                                    }else if(contractRecordTypeIdOrVFPageName != "{!NO_RECORD_TYPE_SO_VALUE}"){ //assume VF page
+                                        contractURLPrefix = "{!vfURLPrefix}" + contractRecordTypeIdOrVFPageName + "{!vfContractURLSuffix}";
+                                    }
+                                    if(sforce.console.isInConsole()){
+                                        sforce.console.getEnclosingPrimaryTabId(openContractSCC );
+                                    }else{
+                                        window.top.location = contractURLPrefix;
+                                    }
+                                }
+                                contractRecordTypeSelectField.selectedIndex=0;
+                            }
+                            var openContractSCC = function openContractSCC (result) {
+                                sforce.console.openSubtab(result.id ,contractURLPrefix+'&isdtp=vw', true, '', null);
+                            }
+                        </script>
+                    </apex:selectList>
+                </span>
+            </apex:outputPanel>
+            <span class="about">
+                <apex:outputLink value="#" onclick="ShowAboutBox();">About</apex:outputLink>
+            </span>
+        </div>
+    </apex:form>
+    <script>
+    	function ShowAboutBox(){
+			window.showModalDialog("{!URLFOR($Resource.QuickCreateToolbarResources, '/QuickCreateToolbarAbout.html')}","","dialogWidth:625px; dialogHeight:100px; resizable: No; status: No; center: Yes");
+    	}
+    </script>
+</apex:component>

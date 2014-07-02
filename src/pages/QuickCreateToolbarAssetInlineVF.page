@@ -1,0 +1,4 @@
+<apex:page standardController="Asset">
+  <c:QuickCreateToolbar currentRecordId="{!$CurrentPage.parameters.id}"
+    showCase="true" showOpportunity="true" showAsset="true" showContract="true"/>
+</apex:page>
