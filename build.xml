@@ -21,6 +21,7 @@
     </target>
 
     <target name="cleanSrcBeforeDeploy">
+    	<echo message="Scrubbing Account.settings enableAccountTeams"/>
     	<outcomment file="src/settings/Account.settings" tagName="enableAccountTeams"/>
     </target>
 
