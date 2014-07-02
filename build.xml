@@ -27,8 +27,8 @@
 
     <!-- Macro: comment out specific tags -->
     <macrodef name="outcomment">
-	  <attribute name="file">
-	  <attribute name="tagName">
+	  <attribute name="file"/>
+	  <attribute name="tagName"/>
 	  <sequential>
 	    <replaceregexp file="@{file}"
 	           match="(&lt;@{tagname}&gt;[^]&lt;/@{tagname}&gt;)"
